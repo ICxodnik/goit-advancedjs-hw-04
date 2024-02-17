@@ -1,5 +1,6 @@
 import axios from "axios";
 
+const per_page = 40;
 const imgFetcher = axios.create({
     baseURL: 'https://pixabay.com/api/',
     params: {
@@ -7,7 +8,7 @@ const imgFetcher = axios.create({
         safesearch: true,
         orientation: "horizontal",
         image_type: "photo",
-        per_page: 40,
+        per_page: per_page,
     }
 });
 
@@ -27,7 +28,7 @@ export async function getItems(searchValue, page = 1) {
             likeCount: element.likes,
             viewCount: element.views,
             commentsCount: element.comments,
-            downloadCount: element.downloads
+            downloadCount: element.downloads,
         }
     });
 
@@ -39,5 +40,6 @@ export async function getItems(searchValue, page = 1) {
          * so we use `total` to display all available images count
          */
         total: response.data.total,
+        hasNextPage: (response.data.total - (page * per_page)) > 0
     };
 }

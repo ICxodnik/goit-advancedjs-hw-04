@@ -60,11 +60,14 @@ async function loadImages(search, page) {
     /**
      * We do additional logic only when the first page is loaded
      */
-    const isFirstPage = page === 1;
     try {
         const result = await serviceApi.getItems(search, page);
 
+        const isFirstPage = page === 1;
+        const isLastPage = !result.hasNextPage;
+
         if (!result.data.length) {
+            clearGallary()
             iziToast.warning({
                 title: "Caution",
                 message: isFirstPage ? NoImageFirstPage : NoImageLaterPages,
@@ -81,6 +84,12 @@ async function loadImages(search, page) {
         }
 
         addGallary(result.data);
+
+        if (isLastPage) {
+            loadMoreRef.classList.add("hidden");
+            return;
+        }
+        loadMoreRef.classList.remove("hidden");
     }
     catch (e) {
         iziToast.error({
