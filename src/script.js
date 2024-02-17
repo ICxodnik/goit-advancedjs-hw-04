@@ -10,29 +10,13 @@ let page = 1;
 
 formRef.addEventListener("submit", async function onSubmit(e) {
     e.preventDefault();
-    clearGallary();
-    try {
-        const result = await serviceApi.getItems(formRef.elements.searchQuery.value);
-        if (!result.data.length) {
-            iziToast.warning({
-                title: 'Caution',
-                message: 'Sorry, there are no images matching your search query. Please try again.',
-            });
-            return;
-        }
-        iziToast.success({
-            title: 'OK',
-            message: `Hooray! We found ${result.totalHits} images.`,
-        });
-        addGallary(result.data);
-    }
-    catch (e) {
-        iziToast.error({
-            title: 'Error',
-            message: e,
-        });
-        console.log(e);
-    }
+    page = 1;
+    loadImages(formRef.elements.searchQuery.value, page);
+});
+
+loadMoreRef.addEventListener("click", async function onLoadMore(e) {
+    page++;
+    loadImages(formRef.elements.searchQuery.value, page);
 });
 
 function clearGallary() {
@@ -69,16 +53,33 @@ function addGallary(data) {
     galleryRef.insertAdjacentHTML("beforeend", result);
 }
 
-loadMoreRef.addEventListener("click", async function onLoadMore(e) {
+const NoImageFirstPage = "Sorry, there are no images matching your search query.Please try again.";
+const NoImageLaterPages = "We're sorry, but you've reached the end of search results.";
+
+async function loadImages(search, page) {
+    /**
+     * We do additional logic only when the first page is loaded
+     */
+    const isFirstPage = page === 1;
     try {
-        const result = await serviceApi.getItems(formRef.elements.searchQuery.value, ++page);
+        const result = await serviceApi.getItems(search, page);
+
         if (!result.data.length) {
             iziToast.warning({
                 title: "Caution",
-                message: "We're sorry, but you've reached the end of search results.",
+                message: isFirstPage ? NoImageFirstPage : NoImageLaterPages,
             });
             return;
         }
+
+        if (isFirstPage) {
+            clearGallary();
+            iziToast.success({
+                title: 'OK',
+                message: `Hooray! We found ${result.totalHits} images.`,
+            });
+        }
+
         addGallary(result.data);
     }
     catch (e) {
@@ -88,7 +89,6 @@ loadMoreRef.addEventListener("click", async function onLoadMore(e) {
         });
         console.log(e);
     }
-});
-
+}
 
 
