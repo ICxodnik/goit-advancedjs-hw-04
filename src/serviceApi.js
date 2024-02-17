@@ -26,6 +26,9 @@ export async function getItems(searchValue) {
             downloadCount: element.downloads
         }
     });
-    console.log(data);
-    return data;
+
+    return {
+        data,
+        totalHits: response.data.totalHits
+    };
 }

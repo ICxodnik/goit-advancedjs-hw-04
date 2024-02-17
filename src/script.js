@@ -1,4 +1,6 @@
-import * as serviceApi from "./serviceApi"
+import * as serviceApi from "./serviceApi";
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
 
 const formRef = document.getElementById("search-form");
 const galleryRef = document.getElementById("gallery");
@@ -7,8 +9,36 @@ const loadMoreRef = document.getElementById("load-more");
 
 formRef.addEventListener("submit", async function onSubmit(e) {
     e.preventDefault();
-    const data = await serviceApi.getItems(e.target.elements.searchQuery.value);
+    try {
+        const result = await serviceApi.getItems(e.target.elements.searchQuery.value);
+        if (!result.data.length) {
+            iziToast.error({
+                title: 'Caution',
+                message: 'Sorry, there are no images matching your search query. Please try again.',
+            });
+            clearGallary();
+            return;
+        }
+        iziToast.success({
+            title: 'OK',
+            message: `Hooray! We found ${result.totalHits} images.`,
+        });
+        addGallary(result.data);
+    }
+    catch (e) {
+        iziToast.error({
+            title: 'Error',
+            message: e,
+        });
+        console.log(e);
+    }
+});
 
+function clearGallary() {
+    galleryRef.innerHTML = "";
+}
+
+function addGallary(data) {
     // const fragment = document.createDocumentFragment();
     // largeImageUrl
     const result = data.map(el => {
@@ -32,7 +62,7 @@ formRef.addEventListener("submit", async function onSubmit(e) {
     })
         .join("");
     galleryRef.innerHTML = result;
-});
+}
 
 loadMoreRef.addEventListener("click", function onLoadMore(e) {
 
