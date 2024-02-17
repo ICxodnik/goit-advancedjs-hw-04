@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="reset.css" />
-    <link rel="stylesheet" href="main.css" />
     <link rel="stylesheet" href="elements.css" />
+    <link rel="stylesheet" href="main.css" />
   </head>
   <body>
     <header>
@@ -16,15 +16,21 @@
           name="searchQuery"
           autocomplete="off"
           placeholder="Search images..."
+          class="search-input"
         />
-        <button type="submit">Search</button>
+        <button class="button" type="submit">Search</button>
       </form>
     </header>
     <main>
       <div id="gallery" class="gallery">
         <!-- Картки зображень -->
       </div>
-      <button type="button" id="load-more" class="load-more hidden">
+      <button
+        class="button load-more hidden"
+        type="button"
+        id="load-more"
+        class="load-more hidden"
+      >
         Load more
       </button>
     </main>

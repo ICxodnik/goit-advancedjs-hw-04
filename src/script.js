@@ -74,13 +74,15 @@ const NoImageLaterPages = "We're sorry, but you've reached the end of search res
 
 async function loadImages(search, page) {
     try {
+        loadMoreRef.classList.add("hidden");
+
         const result = await serviceApi.getItems(search, page);
 
         const isFirstPage = page === 1;
         const isLastPage = !result.hasNextPage;
 
         if (!result.data.length) {
-            clearGallary()
+            clearGallary();
             iziToast.warning({
                 title: "Caution",
                 message: isFirstPage ? NoImageFirstPage : NoImageLaterPages,
@@ -90,6 +92,7 @@ async function loadImages(search, page) {
 
         if (isFirstPage) {
             clearGallary();
+
             iziToast.success({
                 title: 'OK',
                 message: `Hooray! We found ${result.total} images.`,

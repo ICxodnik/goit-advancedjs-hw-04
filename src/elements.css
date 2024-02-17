@@ -1,4 +1,4 @@
-input {
+.search-input {
     padding: 0 10px;
     text-align: left;
     transition-property: box-shadow,
@@ -22,18 +22,18 @@ input {
     max-width: 300px;
 }
 
-input:hover {
+.search-input:hover {
     box-shadow: 0px 2px 4px rgb(39 44 52 / 12%);
 }
 
-input:focus {
+.search-input:focus {
     transition-property: border-color, box-shadow, background;
     border-color: #39414D;
     outline: 0px;
     box-shadow: 0 0 0 3px #c5d2e7;
 }
 
-button {
+.button {
     display: inline-block;
     outline: none;
     cursor: pointer;
@@ -51,6 +51,6 @@ button {
     transition-duration: 150ms;
 }
 
-button:hover {
+.button:hover {
     box-shadow: 0 2px 2px rgb(39 44 52 / 12%);
 }
