@@ -99,9 +99,11 @@ async function loadImages(search, page) {
         }
 
         addGallary(result.data);
-
         lightbox.refresh();
 
+        if (!isFirstPage) {
+            scrollForward();
+        }
         if (isLastPage) {
             loadMoreRef.classList.add("hidden");
             return;
@@ -117,4 +119,13 @@ async function loadImages(search, page) {
     }
 }
 
+
+function scrollForward() {
+    const { height: cardHeight } = galleryRef.firstElementChild.getBoundingClientRect();
+
+    window.scrollBy({
+        top: cardHeight * 2,
+        behavior: "smooth",
+    });
+}
 
