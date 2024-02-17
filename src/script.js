@@ -1,12 +1,20 @@
 import * as serviceApi from "./serviceApi";
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const formRef = document.getElementById("search-form");
 const galleryRef = document.getElementById("gallery");
 const loadMoreRef = document.getElementById("load-more");
 let page = 1;
 
+var lightbox = new SimpleLightbox('.gallery a', {
+    captions: true,
+    captionDelay: 250,
+    captionType: 'attr',
+    captionsData: 'alt'
+});
 
 formRef.addEventListener("submit", async function onSubmit(e) {
     e.preventDefault();
@@ -25,10 +33,17 @@ function clearGallary() {
 
 function addGallary(data) {
     // const fragment = document.createDocumentFragment();
-    // largeImageUrl
     const result = data.map(el => {
         return `<div class="photo-card">
-            <img src="${el.previewImageUrl}" alt="${el.altTags}" loading="lazy" />
+            <a class="gallery__link" href="${el.largeImageUrl}">
+                <img
+                    src="${el.previewImageUrl}"
+                    alt="${el.altTags}"
+                    data-source="${el.largeImageUrl}"
+                    loading="lazy"
+                    class="gallery__image"
+                />
+            </a>
             <div class="info">
                 <p class="info-item">
                     <b>Likes</b>
@@ -84,6 +99,8 @@ async function loadImages(search, page) {
         }
 
         addGallary(result.data);
+
+        lightbox.refresh();
 
         if (isLastPage) {
             loadMoreRef.classList.add("hidden");
