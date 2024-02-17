@@ -76,7 +76,7 @@ async function loadImages(search, page) {
             clearGallary();
             iziToast.success({
                 title: 'OK',
-                message: `Hooray! We found ${result.totalHits} images.`,
+                message: `Hooray! We found ${result.total} images.`,
             });
         }
 

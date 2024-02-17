@@ -33,6 +33,11 @@ export async function getItems(searchValue, page = 1) {
 
     return {
         data,
-        totalHits: response.data.totalHits
+        /**
+         * `totalHits` field appears to be restricted to 500 items 
+         * which is upper limit of a `per_page`
+         * so we use `total` to display all available images count
+         */
+        total: response.data.total,
     };
 }
