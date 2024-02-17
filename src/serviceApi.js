@@ -6,12 +6,14 @@ let config = {
         key: "42411336-47edecd0595d1c6e33b2e7e0d",
         safesearch: true,
         orientation: "horizontal",
-        image_type: "photo"
+        image_type: "photo",
+        per_page: 40
     }
 }
 
-export async function getItems(searchValue) {
+export async function getItems(searchValue, page = 1) {
     config.params.q = searchValue;
+    config.params.page = page;
 
     const response = await axios.get('/', config);
 
