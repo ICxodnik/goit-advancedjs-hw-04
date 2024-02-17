@@ -68,10 +68,17 @@ img {
 .search-form {
     display: flex;
     justify-content: center;
-    padding-top: 20px;
+    padding: 10px 0px;
     gap: 10px;
+    background-color: #b7b0c2;
 }
 
 .search-form input {
     min-width: 200px;
+}
+
+.load-more {
+    margin: 50px auto;
+    display: block;
+    padding: 10px 20px;
 }
