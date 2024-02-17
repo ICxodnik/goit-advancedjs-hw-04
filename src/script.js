@@ -97,6 +97,8 @@ async function loadImages(search, page) {
                 title: 'OK',
                 message: `Hooray! We found ${result.total} images.`,
             });
+
+            scrollToTop();
         }
 
         addGallary(result.data);
@@ -123,6 +125,13 @@ function scrollForward() {
 
     window.scrollBy({
         top: cardHeight * 2,
+        behavior: "smooth",
+    });
+}
+
+function scrollToTop() {
+    window.scrollBy({
+        top: 0,
         behavior: "smooth",
     });
 }
