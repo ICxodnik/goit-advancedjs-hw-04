@@ -105,11 +105,9 @@ async function loadImages(search, page) {
         if (!isFirstPage) {
             scrollForward();
         }
-        if (isLastPage) {
-            loadMoreRef.classList.add("hidden");
-            return;
+        if (!isLastPage) {
+            loadMoreRef.classList.remove("hidden");
         }
-        loadMoreRef.classList.remove("hidden");
     }
     catch (e) {
         iziToast.error({
