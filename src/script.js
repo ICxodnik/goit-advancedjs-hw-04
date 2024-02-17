@@ -1,20 +1,21 @@
 import * as serviceApi from "./serviceApi";
 import iziToast from "izitoast";
-import "izitoast/dist/css/iziToast.min.css";
 import SimpleLightbox from "simplelightbox";
+
+import "izitoast/dist/css/iziToast.min.css";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
 const formRef = document.getElementById("search-form");
 const galleryRef = document.getElementById("gallery");
 const loadMoreRef = document.getElementById("load-more");
-let page = 1;
-
-var lightbox = new SimpleLightbox('.gallery a', {
+const lightbox = new SimpleLightbox('.gallery a', {
     captions: true,
     captionDelay: 250,
     captionType: 'attr',
     captionsData: 'alt'
 });
+
+let page = 1;
 
 formRef.addEventListener("submit", async function onSubmit(e) {
     e.preventDefault();
@@ -32,7 +33,7 @@ function clearGallary() {
 }
 
 function addGallary(data) {
-    // const fragment = document.createDocumentFragment();
+    // TODO: change template instantiation to prevent XSS injection
     const result = data.map(el => {
         return `<div class="photo-card">
             <a class="gallery__link" href="${el.largeImageUrl}">
@@ -72,9 +73,6 @@ const NoImageFirstPage = "Sorry, there are no images matching your search query.
 const NoImageLaterPages = "We're sorry, but you've reached the end of search results.";
 
 async function loadImages(search, page) {
-    /**
-     * We do additional logic only when the first page is loaded
-     */
     try {
         const result = await serviceApi.getItems(search, page);
 
@@ -118,7 +116,6 @@ async function loadImages(search, page) {
         console.log(e);
     }
 }
-
 
 function scrollForward() {
     const { height: cardHeight } = galleryRef.firstElementChild.getBoundingClientRect();
