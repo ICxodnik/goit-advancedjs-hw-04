@@ -46,16 +46,20 @@ function addGallary(data) {
             <img src="${el.previewImageUrl}" alt="${el.altTags}" loading="lazy" />
             <div class="info">
                 <p class="info-item">
-                    <b>Likes ${el.likeCount}</b>
-                </p>
-                    <p class="info-item">
-                <b>Views ${el.viewCount}</b>
+                    <b>Likes</b>
+                    <span>${el.likeCount}</span>
                 </p>
                 <p class="info-item">
-                    <b>Comments ${el.commentsCount}</b>
+                    <b>Views</b>
+                    <span>${el.viewCount}</span>
                 </p>
                 <p class="info-item">
-                    <b>Downloads ${el.downloadCount}</b>
+                    <b>Comments</b>
+                    <span>${el.commentsCount}</span>
+                </p>
+                <p class="info-item">
+                    <b>Downloads</b>
+                    <span>${el.downloadCount}</span>
                 </p>
             </div>
         </div>`
