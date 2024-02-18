@@ -112,14 +112,16 @@ async function loadImages(search, page) {
         lightbox.refresh();
 
         if (!isFirstPage) {
+            if (isLastPage) {
+                iziToast.info({
+                    title: 'OK',
+                    message: `We're sorry, but you've reached the end of search results.`,
+                });
+            }
             scrollForward();
         }
-        if (isLastPage) {
-            iziToast.info({
-                title: 'OK',
-                message: `We're sorry, but you've reached the end of search results.`,
-            });
-        } else {
+
+        if (!isLastPage) {
             loadMoreRef.classList.remove("hidden");
         }
     }
