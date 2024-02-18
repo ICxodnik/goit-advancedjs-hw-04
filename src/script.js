@@ -76,7 +76,14 @@ async function loadImages(search, page) {
     try {
         loadMoreRef.classList.add("hidden");
 
-        const result = await serviceApi.getItems(search, page);
+        if (!search.trim()) {
+            iziToast.error({
+                message: `Please type search value into input`,
+            });
+            return;
+        }
+
+        const result = await serviceApi.getItems(search.trim(), page);
 
         const isFirstPage = page === 1;
         const isLastPage = !result.hasNextPage;
@@ -107,7 +114,12 @@ async function loadImages(search, page) {
         if (!isFirstPage) {
             scrollForward();
         }
-        if (!isLastPage) {
+        if (isLastPage) {
+            iziToast.info({
+                title: 'OK',
+                message: `We're sorry, but you've reached the end of search results.`,
+            });
+        } else {
             loadMoreRef.classList.remove("hidden");
         }
     }
